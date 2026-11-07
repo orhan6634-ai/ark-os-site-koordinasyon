@@ -817,7 +817,10 @@ export function App() {
               SEKME 1: GÖSTERGE PANELİ (dashboard)
              ========================================================= */}
           {activeTab === 'dashboard' && (
-            <div data-testid="tab-panel-dashboard" className="space-y-6">
+            <div
+              data-testid="tab-panel-dashboard"
+              className="no-print space-y-6 print:hidden"
+            >
               {/* FAZ 2.3: EN ÜSTTE 4 KARTLIK "GENEL DURUM" ÖZETİ */}
               <section
                 aria-label="Genel Durum Özeti"
@@ -1068,7 +1071,10 @@ export function App() {
               SEKME 2: KRİZ VE PLAYBOOK (crisis_playbook)
              ========================================================= */}
           {activeTab === 'crisis_playbook' && (
-            <div data-testid="tab-panel-crisis_playbook" className="space-y-6">
+            <div
+              data-testid="tab-panel-crisis_playbook"
+              className="no-print space-y-6 print:hidden"
+            >
               <section
                 aria-label="Kriz Modu ve Kritik Rezervler"
                 className={`rounded-xl border p-4 ${currentModeInfo.bannerClass}`}
@@ -1123,8 +1129,19 @@ export function App() {
           {/* =========================================================
               SEKME 3: OLAY KAYITLARI VE RAPOR (incidents_report)
              ========================================================= */}
-          {activeTab === 'incidents_report' && (
-            <div data-testid="tab-panel-incidents_report" className="space-y-6">
+          <div
+            data-testid={
+              activeTab === 'incidents_report'
+                ? 'tab-panel-incidents_report'
+                : undefined
+            }
+            className={
+              activeTab === 'incidents_report'
+                ? 'space-y-6'
+                : 'hidden print:block'
+            }
+          >
+            {activeTab === 'incidents_report' && (
               <IncidentSection
                 mode={mode}
                 isOffline={connection === 'offline'}
@@ -1134,19 +1151,23 @@ export function App() {
                 onTriggerSync={() => runSync()}
                 syncRefreshToken={syncRefreshToken}
               />
+            )}
 
-              <AfterActionReportSection
-                siteName={snapshot.siteName}
-                refreshToken={syncRefreshToken}
-              />
-            </div>
-          )}
+            <AfterActionReportSection
+              siteName={snapshot.siteName}
+              refreshToken={syncRefreshToken}
+              activeAnomalyCount={activeAnomalyCount}
+            />
+          </div>
 
           {/* =========================================================
               SEKME 4: TEKNİK BAKIM (maintenance)
              ========================================================= */}
           {activeTab === 'maintenance' && (
-            <div data-testid="tab-panel-maintenance" className="space-y-6">
+            <div
+              data-testid="tab-panel-maintenance"
+              className="no-print space-y-6 print:hidden"
+            >
               <section
                 aria-label="Bakım İşleri"
                 className="rounded-xl border border-slate-300 bg-white p-4 shadow-sm"

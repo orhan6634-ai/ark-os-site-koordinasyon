@@ -342,7 +342,7 @@ export function IncidentSection({
   return (
     <section
       aria-label="Olay ve İhtiyaç Kaydı"
-      className="rounded-xl border border-slate-300 bg-white p-4 shadow-sm"
+      className="no-print rounded-xl border border-slate-300 bg-white p-4 shadow-sm print:hidden"
     >
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
         <div>
