@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ark-os-shell-v4';
+const CACHE_NAME = 'ark-os-shell-v5';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -51,6 +51,15 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return;
 
   const url = new URL(request.url);
+  if (url.pathname.startsWith('/.netlify/scripts/')) {
+    event.respondWith(
+      new Response('/* blocked host hud */', {
+        status: 200,
+        headers: { 'Content-Type': 'application/javascript' },
+      })
+    );
+    return;
+  }
   if (url.origin !== self.location.origin) return;
   if (url.pathname.startsWith('/api/')) return;
 

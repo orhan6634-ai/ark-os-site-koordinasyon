@@ -729,6 +729,14 @@ export function App() {
                 <RefreshCw className="h-3.5 w-3.5 text-slate-700" />
                 Örnek Verileri Yenile
               </button>
+              <button
+                type="button"
+                data-testid="header-demo-panel-btn"
+                onClick={() => setIsDemoPanelOpen((prev) => !prev)}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-purple-400 bg-purple-900 px-3 py-1.5 text-xs font-extrabold text-white shadow-sm transition hover:bg-purple-800"
+              >
+                <span>Demo Paneli</span>
+              </button>
             </div>
           </div>
         </div>
@@ -1340,21 +1348,12 @@ export function App() {
         onClose={() => setIsAboutModalOpen(false)}
       />
 
-      {/* ALT BİLGİ ÇUBUĞU (FAZ 6.2 SÜRÜM BİLGİSİ) */}
+      {/* ALT BİLGİ ÇUBUĞU (FAZ 6.2 SÜRÜM BİLGİSİ — Tekrarsız) */}
       <footer className="mt-8 border-t border-slate-300 bg-white py-4 text-xs font-medium text-slate-800 print:hidden">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4">
           <div data-testid="footer-version-notice" className="font-semibold">
             {ARK_OS_VERSION_NOTICE}
           </div>
-          <button
-            type="button"
-            data-testid="open-about-modal-btn"
-            onClick={() => setIsAboutModalOpen(true)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-slate-100 px-3 py-1.5 text-xs font-extrabold text-slate-900 hover:bg-slate-200"
-          >
-            <Info className="h-3.5 w-3.5 text-indigo-700" />
-            Hakkında (v0.9)
-          </button>
         </div>
       </footer>
       </div>

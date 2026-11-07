@@ -35,19 +35,18 @@ Bilgisayarınızda **Node.js (v18 veya üzeri)** kurulu olmalıdır.
 
 ### 3.1 Bağımlılıkların Yüklenmesi
 ```powershell
-cd "C:\Users\orhan şahin\Desktop\Projelerim\site denetleme sistemi"
+git clone https://github.com/orhan6634-ai/ark-os-site-koordinasyon.git
+cd ark-os-site-koordinasyon
 npm install
 ```
 
 ### 3.2 Geliştirme Ortamını Başlatma (Yerel Express Sunucusu + Vite Dev)
 1. **Terminal 1 (Yerel Senkronizasyon Sunucusu — Port 3001):**
    ```powershell
-   cd "C:\Users\orhan şahin\Desktop\Projelerim\site denetleme sistemi"
    npm run server
    ```
 2. **Terminal 2 (Web Arayüzü — Port 5173):**
    ```powershell
-   cd "C:\Users\orhan şahin\Desktop\Projelerim\site denetleme sistemi"
    npm run dev
    ```
    Tarayıcıda `http://localhost:5173/` adresini açın.
@@ -55,7 +54,6 @@ npm install
 ### 3.3 Üretim Sürümü (Production Build) ve Gerçek Çevrimdışı Test Ortamı
 Service Worker ve PWA önbelleklemesinin gerçek ağ kesintisinde (`Network > Offline`) tam olarak çalışması için üretim derlemesini başlatın:
 ```powershell
-cd "C:\Users\orhan şahin\Desktop\Projelerim\site denetleme sistemi"
 npm run build
 npm run preview
 ```
@@ -117,8 +115,10 @@ npm run preview
 
 Proje hem **Vercel** (veya Netlify/Cloudflare Pages) üzerinde bulut dağıtımına hem de statik barındırmaya hazırdır.
 
-### 6.1 Canlı HTTPS Önizleme Adresi
-- **Canlı HTTPS URL:** `https://citations-lasting-lifetime-superintendent.trycloudflare.com/`
+### 6.1 Kalıcı Canlı HTTPS Adresi (7/24 Açık Bulut Dağıtımı — Netlify)
+- **Kalıcı Canlı Site URL:** `https://ark-os-site-koordinasyon.netlify.app/`
+- **Bulut API Sağlık Uç Noktası:** `https://ark-os-site-koordinasyon.netlify.app/api/health`
+- **Bulut Senkronizasyon Uç Noktası:** `https://ark-os-site-koordinasyon.netlify.app/api/sync`
 
 ### 6.2 Vercel ile Dağıtım (GitHub Bağlama veya CLI)
 Projede `vercel.json`, `api/sync.mjs` ve `api/health.mjs` dosyaları hazır olarak yer alır:

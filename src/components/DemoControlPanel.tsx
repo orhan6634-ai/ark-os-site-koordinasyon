@@ -56,7 +56,7 @@ export function DemoControlPanel({
         data-testid="toggle-demo-panel-btn"
         aria-label="Demo Kontrol Çekmecesini Aç veya Kapat"
         onClick={onToggleOpen}
-        className="fixed bottom-4 right-4 z-40 inline-flex items-center gap-2 rounded-full border-2 border-purple-300 bg-purple-900 px-3.5 py-2 text-xs font-bold text-white shadow-lg transition hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        className="fixed bottom-16 right-4 z-[9999] inline-flex items-center gap-2 rounded-full border-2 border-purple-300 bg-purple-900 px-4 py-2.5 text-xs font-extrabold text-white shadow-xl transition hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-500"
       >
         <Sliders className="h-4 w-4" />
         <span>Demo</span>

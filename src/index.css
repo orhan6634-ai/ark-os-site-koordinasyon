@@ -12,6 +12,15 @@ a:focus-visible {
   outline-offset: 2px !important;
 }
 
+/* Netlify'ın oturum açık tarayıcılarda sağ alta enjekte ettiği widget'ı gizle */
+div[data-netlify-deploy-id],
+netlify-drawer,
+iframe[src*="app.netlify.com/cdp"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 @media print {
   @page {
     size: A4 portrait;

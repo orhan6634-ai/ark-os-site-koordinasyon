@@ -1,6 +1,45 @@
 {
   "incidents": [
     {
+      "id": "OLAY-PB-HEATWAVE",
+      "type": "Bilgi / Koordinasyon Notu",
+      "priority": "Yüksek",
+      "location": "Site Giriş / Güvenlik Kulübesi",
+      "description": "Oyun Planı Çalıştırması: Aşırı Sıcak Dalgası (1 adım tamamlandı)",
+      "createdAt": "2026-11-07T18:08:34.211Z",
+      "updatedAt": "2026-11-07T18:08:34.211Z",
+      "status": "İnceleniyor",
+      "createdOffline": false,
+      "syncStatus": "synced",
+      "serverSyncedAt": "2026-11-07T18:08:34.452Z"
+    },
+    {
+      "id": "OLAY-PB-FLASH_FLOOD",
+      "type": "Bilgi / Koordinasyon Notu",
+      "priority": "Yüksek",
+      "location": "Merkez Su Deposu / Hidrofor",
+      "description": "Oyun Planı Çalıştırması: Ani Sağanak / Sel Riski (1 adım tamamlandı)",
+      "createdAt": "2026-11-07T18:08:32.423Z",
+      "updatedAt": "2026-11-07T18:08:32.423Z",
+      "status": "İnceleniyor",
+      "createdOffline": false,
+      "syncStatus": "synced",
+      "serverSyncedAt": "2026-11-07T18:08:32.608Z"
+    },
+    {
+      "id": "OLAY-PB-WILDFIRE_SMOKE",
+      "type": "Bilgi / Koordinasyon Notu",
+      "priority": "Yüksek",
+      "location": "A Blok",
+      "description": "Oyun Planı Çalıştırması: Orman Yangını / Yoğun Duman (1 adım tamamlandı)",
+      "createdAt": "2026-11-07T18:08:30.545Z",
+      "updatedAt": "2026-11-07T18:08:30.545Z",
+      "status": "İnceleniyor",
+      "createdOffline": false,
+      "syncStatus": "synced",
+      "serverSyncedAt": "2026-11-07T18:08:30.935Z"
+    },
+    {
       "id": "OLAY-1794071431680-MM6TY",
       "type": "Arıza / Hasar Bildirimi",
       "priority": "Orta",
@@ -142,19 +181,6 @@
       "createdOffline": false,
       "syncStatus": "synced",
       "serverSyncedAt": "2026-11-07T13:31:12.836Z"
-    },
-    {
-      "id": "OLAY-PB-HEATWAVE",
-      "type": "Bilgi / Koordinasyon Notu",
-      "priority": "Yüksek",
-      "location": "Ortak Bahçe / Otopark",
-      "description": "Oyun Planı Çalıştırması: Aşırı Sıcak Dalgası (3 adım tamamlandı)",
-      "createdAt": "2026-11-07T13:31:09.243Z",
-      "updatedAt": "2026-11-07T13:31:09.893Z",
-      "status": "İnceleniyor",
-      "createdOffline": false,
-      "syncStatus": "synced",
-      "serverSyncedAt": "2026-11-07T13:31:09.947Z"
     },
     {
       "id": "OLAY-1794056820929-FCQ32",
@@ -404,5 +430,5 @@
       "serverSyncedAt": "2026-11-07T07:56:36.605Z"
     }
   ],
-  "lastSyncAt": "2026-11-07T17:10:32.221Z"
+  "lastSyncAt": "2026-11-07T18:08:34.452Z"
 }

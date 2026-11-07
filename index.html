@@ -11,6 +11,36 @@
   </head>
   <body class="bg-slate-50 text-slate-900 antialiased">
     <div id="root"></div>
+    <script>
+      // Barındırma sağlayıcısının (Netlify HUD) sağ alt köşeye enjekte ettiği harici rozeti/çekmeceyi temizle
+      (function () {
+        function removeInjectedHud() {
+          var selectors = [
+            'script[src*="/.netlify/scripts/hud"]',
+            '[data-netlify-site-id]',
+            '[data-nf-variant]',
+            'netlify-drawer',
+            'netlify-widget',
+            'iframe[src*="app.netlify.com"]'
+          ];
+          selectors.forEach(function (sel) {
+            document.querySelectorAll(sel).forEach(function (el) {
+              el.remove();
+            });
+          });
+          // Shadow DOM kullanan sabit sağ-alt enjeksiyonları gizle
+          Array.from(document.body.children).forEach(function (el) {
+            if (el.id !== 'root' && el.tagName !== 'SCRIPT') {
+              el.style.setProperty('display', 'none', 'important');
+              el.remove();
+            }
+          });
+        }
+        removeInjectedHud();
+        var obs = new MutationObserver(removeInjectedHud);
+        obs.observe(document.documentElement, { childList: true, subtree: true });
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
