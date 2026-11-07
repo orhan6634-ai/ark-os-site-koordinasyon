@@ -442,8 +442,8 @@ export function App() {
     }
   > = {
     normal: {
-      title: '1. Normal Mod (Günlük Operasyon)',
-      shortLabel: 'NORMAL MOD',
+      title: '[NORMAL] 1. Normal Mod (Günlük Operasyon)',
+      shortLabel: '[NORMAL] NORMAL MOD',
       badgeClass: 'bg-emerald-700 text-white',
       bannerClass: 'border-emerald-300 bg-emerald-50 text-emerald-950',
       description:
@@ -452,8 +452,8 @@ export function App() {
         'Öncelik: Su/elektrik sayaç takibi ve planlı bakım listesi.',
     },
     crisis: {
-      title: '2. Kriz / Kesinti Modu (Yerel Panel Öncelikli)',
-      shortLabel: 'KRİZ / KESİNTİ MODU',
+      title: '[KRİZ] 2. Kriz / Kesinti Modu (Yerel Panel Öncelikli)',
+      shortLabel: '[KRİZ] KRİZ / KESİNTİ MODU',
       badgeClass: 'bg-red-700 text-white',
       bannerClass: 'border-red-400 bg-red-50 text-red-950',
       description:
@@ -462,8 +462,8 @@ export function App() {
         'Öncelik: Kritik su/enerji rezervleri ve Yüksek öncelikli arıza müdahaleleri.',
     },
     recovery: {
-      title: '3. İyileşme Modu (Normale Dönüş ve Açık İş Takibi)',
-      shortLabel: 'İYİLEŞME MODU',
+      title: '[İYİLEŞME] 3. İyileşme Modu (Normale Dönüş ve Açık İş Takibi)',
+      shortLabel: '[İYİLEŞME] İYİLEŞME MODU',
       badgeClass: 'bg-amber-700 text-white',
       bannerClass: 'border-amber-400 bg-amber-50 text-amber-950',
       description:
@@ -665,36 +665,48 @@ export function App() {
               </span>
               <button
                 type="button"
+                data-testid="mode-btn-normal"
+                aria-pressed={mode === 'normal'}
+                aria-label="Normal Mod [NORMAL]"
                 onClick={() => setMode('normal')}
-                className={`rounded-lg px-3 py-1.5 text-xs font-bold transition sm:text-sm ${
+                className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition sm:text-sm ${
                   mode === 'normal'
                     ? 'bg-emerald-700 text-white shadow-sm'
                     : 'border border-slate-300 bg-white text-slate-900 hover:bg-slate-200'
                 }`}
               >
-                Normal Mod
+                <CheckCircle2 className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                <span>[NORMAL] Normal Mod</span>
               </button>
               <button
                 type="button"
+                data-testid="mode-btn-crisis"
+                aria-pressed={mode === 'crisis'}
+                aria-label="Kriz ve Kesinti Modu [KRİZ]"
                 onClick={() => setMode('crisis')}
-                className={`rounded-lg px-3 py-1.5 text-xs font-bold transition sm:text-sm ${
+                className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition sm:text-sm ${
                   mode === 'crisis'
                     ? 'bg-red-700 text-white shadow-sm'
                     : 'border border-slate-300 bg-white text-slate-900 hover:bg-slate-200'
                 }`}
               >
-                Kriz / Kesinti Modu
+                <AlertTriangle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                <span>[KRİZ] Kriz / Kesinti Modu</span>
               </button>
               <button
                 type="button"
+                data-testid="mode-btn-recovery"
+                aria-pressed={mode === 'recovery'}
+                aria-label="İyileşme Modu [İYİLEŞME]"
                 onClick={() => setMode('recovery')}
-                className={`rounded-lg px-3 py-1.5 text-xs font-bold transition sm:text-sm ${
+                className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition sm:text-sm ${
                   mode === 'recovery'
                     ? 'bg-amber-700 text-white shadow-sm'
                     : 'border border-slate-300 bg-white text-slate-900 hover:bg-slate-200'
                 }`}
               >
-                İyileşme Modu
+                <RefreshCw className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                <span>[İYİLEŞME] İyileşme Modu</span>
               </button>
             </div>
 

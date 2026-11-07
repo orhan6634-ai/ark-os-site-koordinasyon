@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* FAZ 7.2: Klavye ile gezinme (Tab) için yüksek kontrastlı odak halkası */
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 3px solid #4338ca !important;
+  outline-offset: 2px !important;
+}
+
 @media print {
   @page {
     size: A4 portrait;

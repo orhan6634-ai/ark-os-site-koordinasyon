@@ -812,7 +812,8 @@ export function IncidentSection({
                       </td>
                       <td className="px-3 py-3">
                         <span
-                          className={`inline-flex rounded-md px-2 py-0.5 text-xs font-extrabold ${
+                          data-testid={`priority-badge-${item.id}`}
+                          className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-extrabold ${
                             item.priority === 'Kritik'
                               ? 'bg-red-700 text-white'
                               : item.priority === 'Yüksek'
@@ -822,7 +823,8 @@ export function IncidentSection({
                               : 'bg-slate-200 text-slate-800'
                           }`}
                         >
-                          {item.priority}
+                          <AlertCircle className="h-3 w-3 shrink-0" aria-hidden="true" />
+                          <span>[{item.priority.toUpperCase()}] {item.priority}</span>
                         </span>
                       </td>
                       <td className="px-3 py-3 text-xs font-bold text-slate-800">

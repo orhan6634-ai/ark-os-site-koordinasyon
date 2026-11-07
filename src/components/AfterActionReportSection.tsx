@@ -23,6 +23,20 @@ function formatDateTimeTr(iso: string): string {
   }
 }
 
+/**
+ * FAZ 7.1: Kullanıcı girdilerini silmeden HTML/Markdown dışa aktarımında
+ * güvenli düz metin olarak kaçıran yardımcı fonksiyon.
+ */
+export function escapeUserTextForMarkdown(raw: string): string {
+  return raw
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/\|/g, '\\|');
+}
+
 export function AfterActionReportSection({
   siteName,
   refreshToken,
@@ -179,7 +193,8 @@ export function AfterActionReportSection({
               .map((s) => `#${s.order} ${s.title}`)
               .join('; ')})`
           : '';
-      const safeDesc = `${item.description}${subText}`.replace(/\|/g, '\\|');
+      const safeDesc = escapeUserTextForMarkdown(`${item.description}${subText}`);
+      const safeLoc = escapeUserTextForMarkdown(item.location);
       const syncLabel =
         item.syncStatus === 'synced'
           ? 'Senkronize edildi'
@@ -190,9 +205,7 @@ export function AfterActionReportSection({
       lines.push(
         `| ${idx + 1} | ${formatDateTimeTr(item.createdAt)} | \`${item.id}\` - ${
           item.type
-        } | ${item.priority} / ${item.status} | ${
-          item.location
-        } | ${safeDesc} | ${syncLabel} |`
+        } | ${item.priority} / ${item.status} | ${safeLoc} | ${safeDesc} | ${syncLabel} |`
       );
     });
 
