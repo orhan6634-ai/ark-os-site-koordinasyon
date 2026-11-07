@@ -128,13 +128,13 @@ export function AfterActionReportSection({
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 print:hidden">
+        <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto print:hidden">
           <select
             aria-label="Raporlanacak Olay Seçimi"
             data-testid="report-incident-select"
             value={selectedId}
             onChange={(e) => setSelectedId(e.target.value)}
-            className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-800"
+            className="w-full max-w-full truncate rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-800 sm:w-72"
           >
             <option value="ALL">
               Tüm Olayların Zaman Çizelgesi ({incidents.length} kayıt)

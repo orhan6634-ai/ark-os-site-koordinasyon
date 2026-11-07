@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ark-os-shell-v3';
+const CACHE_NAME = 'ark-os-shell-v4';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -54,8 +54,7 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== self.location.origin) return;
   if (url.pathname.startsWith('/api/')) return;
 
-  // Sayfa yenileme / gezinme (navigate) isteklerinde:
-  // Önce ağı dene, ağ kapalıysa ("Network > Offline") önbellekteki uygulama kabuğunu döndür
+  // Sayfa yenileme / gezinme (navigate) istekleri:
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
@@ -69,27 +68,25 @@ self.addEventListener('fetch', (event) => {
         .catch(async () => {
           const cachedIndex = await caches.match('/index.html');
           if (cachedIndex) return cachedIndex;
-          const cachedRoot = await caches.match('/');
-          return cachedRoot;
+          return caches.match('/');
         })
     );
     return;
   }
 
-  // JS, CSS, SVG ve manifest dosyaları için Cache-First + arka plan güncelleme
+  // Varlıklar (JS, CSS, ikonlar): Önce ağı dene ve önbelleği güncelle, ağ kapalıysa önbellekten dön
   event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      const fetchPromise = fetch(request)
-        .then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200) {
-            const clone = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-          }
-          return networkResponse;
-        })
-        .catch(() => cachedResponse);
-
-      return cachedResponse || fetchPromise;
-    })
+    fetch(request)
+      .then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const clone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+        }
+        return networkResponse;
+      })
+      .catch(async () => {
+        const cachedResponse = await caches.match(request);
+        return cachedResponse;
+      })
   );
 });
