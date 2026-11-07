@@ -96,7 +96,9 @@ export async function updateIncidentStatus(
 }
 
 export async function getPendingIncidents(): Promise<IncidentRecord[]> {
-  return db.incidents.where('syncStatus').equals('pending').toArray();
+  return db.incidents
+    .filter((item) => item.syncStatus === 'pending' || item.syncStatus === 'failed')
+    .toArray();
 }
 
 export async function markIncidentsSynced(ids: string[]): Promise<void> {
@@ -104,6 +106,15 @@ export async function markIncidentsSynced(ids: string[]): Promise<void> {
   await db.transaction('rw', db.incidents, async () => {
     for (const id of ids) {
       await db.incidents.update(id, { syncStatus: 'synced' });
+    }
+  });
+}
+
+export async function markIncidentsFailed(ids: string[]): Promise<void> {
+  if (!ids.length) return;
+  await db.transaction('rw', db.incidents, async () => {
+    for (const id of ids) {
+      await db.incidents.update(id, { syncStatus: 'failed' });
     }
   });
 }

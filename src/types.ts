@@ -61,7 +61,7 @@ export interface IncidentRecord {
   updatedAt: string;
   status: IncidentStatus;
   createdOffline: boolean;
-  syncStatus: 'pending' | 'synced';
+  syncStatus: 'pending' | 'synced' | 'failed';
 }
 
 export type PlaybookId =

@@ -1,6 +1,32 @@
 {
   "incidents": [
     {
+      "id": "OLAY-1794046601882-0O67W",
+      "type": "Arıza / Hasar Bildirimi",
+      "priority": "Orta",
+      "location": "A Blok",
+      "description": "Faz 1 Gerçek Offline Test Kaydı - Hidrofor kontrolü",
+      "createdAt": "2026-11-07T10:16:41.882Z",
+      "updatedAt": "2026-11-07T10:16:41.882Z",
+      "status": "Açık",
+      "createdOffline": true,
+      "syncStatus": "synced",
+      "serverSyncedAt": "2026-11-07T10:16:42.733Z"
+    },
+    {
+      "id": "OLAY-ORNEK-01",
+      "type": "Arıza / Hasar Bildirimi",
+      "priority": "Yüksek",
+      "location": "B Blok - Bodrum Hidrofor Odası",
+      "description": "Örnek kayıt: Yedek hidrofor pompasında titreşim ve basınç dalgalanması gözlemlendi, teknik ekip bilgilendirildi.",
+      "createdAt": "2026-11-07T09:51:33.911Z",
+      "updatedAt": "2026-11-07T09:51:33.912Z",
+      "status": "İnceleniyor",
+      "createdOffline": false,
+      "syncStatus": "synced",
+      "serverSyncedAt": "2026-11-07T10:16:34.292Z"
+    },
+    {
       "id": "OLAY-1794044634807-7NZSM",
       "type": "Arıza / Hasar Bildirimi",
       "priority": "Orta",
@@ -118,6 +144,19 @@
       "serverSyncedAt": "2026-11-07T09:28:18.887Z"
     },
     {
+      "id": "OLAY-ORNEK-02",
+      "type": "Temel İhtiyaç Talebi",
+      "priority": "Orta",
+      "location": "A Blok - Daire 4 (Yaşlı Sakin)",
+      "description": "Örnek kayıt: Asansör bakımı süresince içme suyu damacanasının kata çıkarılması için site görevlisi desteği talep edildi.",
+      "createdAt": "2026-11-07T09:26:33.912Z",
+      "updatedAt": "2026-11-07T09:26:33.912Z",
+      "status": "Açık",
+      "createdOffline": false,
+      "syncStatus": "synced",
+      "serverSyncedAt": "2026-11-07T10:16:34.292Z"
+    },
+    {
       "id": "OLAY-1794039628446-5IWB4",
       "type": "Bilgi / Koordinasyon Notu",
       "priority": "Yüksek",
@@ -170,19 +209,6 @@
       "serverSyncedAt": "2026-11-07T08:20:06.641Z"
     },
     {
-      "id": "OLAY-ORNEK-01",
-      "type": "Arıza / Hasar Bildirimi",
-      "priority": "Yüksek",
-      "location": "B Blok - Bodrum Hidrofor Odası",
-      "description": "Örnek kayıt: Yedek hidrofor pompasında titreşim ve basınç dalgalanması gözlemlendi, teknik ekip bilgilendirildi.",
-      "createdAt": "2026-11-07T08:03:21.473Z",
-      "updatedAt": "2026-11-07T08:03:21.473Z",
-      "status": "İnceleniyor",
-      "createdOffline": false,
-      "syncStatus": "synced",
-      "serverSyncedAt": "2026-11-07T08:28:21.844Z"
-    },
-    {
       "id": "OLAY-1794038578019-GU4BE",
       "type": "Bilgi / Koordinasyon Notu",
       "priority": "Yüksek",
@@ -194,19 +220,6 @@
       "createdOffline": false,
       "syncStatus": "synced",
       "serverSyncedAt": "2026-11-07T08:02:58.032Z"
-    },
-    {
-      "id": "OLAY-ORNEK-02",
-      "type": "Temel İhtiyaç Talebi",
-      "priority": "Orta",
-      "location": "A Blok - Daire 4 (Yaşlı Sakin)",
-      "description": "Örnek kayıt: Asansör bakımı süresince içme suyu damacanasının kata çıkarılması için site görevlisi desteği talep edildi.",
-      "createdAt": "2026-11-07T07:38:21.473Z",
-      "updatedAt": "2026-11-07T07:38:21.473Z",
-      "status": "Açık",
-      "createdOffline": false,
-      "syncStatus": "synced",
-      "serverSyncedAt": "2026-11-07T08:28:21.844Z"
     },
     {
       "id": "OLAY-1794036562524-7HGPA",
@@ -248,5 +261,5 @@
       "serverSyncedAt": "2026-11-07T07:56:36.605Z"
     }
   ],
-  "lastSyncAt": "2026-11-07T09:44:25.725Z"
+  "lastSyncAt": "2026-11-07T10:16:42.733Z"
 }

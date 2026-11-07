@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Activity,
   AlertTriangle,
@@ -126,8 +126,11 @@ function MetricCard({
 
 export function App() {
   const [mode, setMode] = useState<SystemMode>('normal');
+  const [browserOnline, setBrowserOnline] = useState<boolean>(
+    typeof navigator !== 'undefined' ? navigator.onLine : true
+  );
   const [connection, setConnection] = useState<ConnectionState>(
-    navigator.onLine ? 'online' : 'offline'
+    typeof navigator !== 'undefined' && navigator.onLine ? 'online' : 'offline'
   );
   const [snapshot, setSnapshot] = useState<DashboardSnapshot>(() =>
     createInitialSnapshot()
@@ -135,6 +138,7 @@ export function App() {
   const [missingSourceDemo, setMissingSourceDemo] = useState<boolean>(false);
   const [waterAnomalyDemo, setWaterAnomalyDemo] = useState<boolean>(false);
   const [simulatedOffline, setSimulatedOffline] = useState<boolean>(false);
+  const simulatedOfflineRef = useRef<boolean>(false);
   const [simulatedPowerOutage, setSimulatedPowerOutage] =
     useState<boolean>(false);
   const [activePlaybookId, setActivePlaybookId] =
@@ -152,10 +156,12 @@ export function App() {
   const [syncRefreshToken, setSyncRefreshToken] = useState<number>(0);
 
   const runSync = async (forceAllowWhenSimulatedEnded = false) => {
-    if (
-      !navigator.onLine ||
-      (simulatedOffline && !forceAllowWhenSimulatedEnded)
-    ) {
+    const isRealOnline = navigator.onLine;
+    setBrowserOnline(isRealOnline);
+    const isSimOffline =
+      simulatedOfflineRef.current && !forceAllowWhenSimulatedEnded;
+
+    if (!isRealOnline || isSimOffline) {
       setConnection('offline');
       return;
     }
@@ -171,22 +177,31 @@ export function App() {
       const msg =
         err instanceof Error
           ? err.message
-          : 'Sahte sunucuya bağlantı kurulamadı.';
+          : 'Gönderilemedi, tekrar denenecek.';
       setSyncError(msg);
       setConnection(
-        navigator.onLine && !simulatedOffline ? 'online' : 'offline'
+        navigator.onLine && !simulatedOfflineRef.current ? 'online' : 'offline'
       );
+      setSyncRefreshToken((prev) => prev + 1);
     }
   };
 
   useEffect(() => {
-    if (navigator.onLine) {
+    if (navigator.onLine && !simulatedOfflineRef.current) {
       void runSync();
+    } else {
+      setConnection('offline');
     }
     const handleOnline = () => {
-      void runSync();
+      setBrowserOnline(true);
+      if (!simulatedOfflineRef.current) {
+        void runSync(true);
+      }
     };
-    const handleOffline = () => setConnection('offline');
+    const handleOffline = () => {
+      setBrowserOnline(false);
+      setConnection('offline');
+    };
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
     return () => {
@@ -248,10 +263,11 @@ export function App() {
 
   const toggleSimulatedOffline = () => {
     const next = !simulatedOffline;
+    simulatedOfflineRef.current = next;
     setSimulatedOffline(next);
-    if (next) {
+    if (next || !navigator.onLine) {
       setConnection('offline');
-    } else if (navigator.onLine) {
+    } else {
       void runSync(true);
     }
   };
@@ -432,7 +448,7 @@ export function App() {
               {connection === 'online' && (
                 <>
                   <Wifi className="h-3.5 w-3.5 text-emerald-600" />
-                  Çevrimiçi
+                  Çevrimiçi (Gerçek Ağ)
                   {lastSyncResult && !syncError && (
                     <span
                       data-testid="header-synced-pill"
@@ -441,12 +457,24 @@ export function App() {
                       • Senkronize edildi
                     </span>
                   )}
+                  {syncError && (
+                    <span
+                      data-testid="header-sync-failed-pill"
+                      className="ml-1 rounded bg-amber-200 px-1.5 py-0.5 text-[11px] font-bold text-amber-950"
+                    >
+                      • Gönderilemedi, tekrar denenecek
+                    </span>
+                  )}
                 </>
               )}
               {connection === 'offline' && (
                 <>
                   <WifiOff className="h-3.5 w-3.5 text-red-600" />
-                  Çevrimdışı (Yerel Mod)
+                  {!browserOnline && simulatedOffline
+                    ? 'Çevrimdışı (Gerçek Ağ Kesik + Demo Simülasyonu)'
+                    : !browserOnline
+                    ? 'Çevrimdışı (Gerçek Ağ Kesintisi)'
+                    : 'Çevrimdışı (Demo Simülasyonu)'}
                 </>
               )}
               {connection === 'syncing' && (

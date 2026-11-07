@@ -48,6 +48,18 @@ npm run dev
 > Ardından internet tarayıcınızda (Edge veya Chrome) şu adresi açın:
 > **http://localhost:5173/**
 
+### Adım 2.3 — Üretim Sürümü (Build + Preview) ve Gerçek Çevrimdışı (Offline) Testi
+Service Worker ve PWA uygulama kabuğunun gerçek çevrimdışı ortamda (ağ tamamen kesikken sayfa yenilendiğinde) çalışmasını test etmek için üretim sürümünü şu komutla başlatın:
+
+```powershell
+cd "C:\Users\orhan şahin\Desktop\Projelerim\site denetleme sistemi"
+npm run build
+npm run preview
+```
+> Üretim önizleme sunucusu **http://localhost:4173/** adresinde açılır.
+>
+> **Gerçek offline testi:** build'i çalıştır, tarayıcı geliştirici araçlarında Network > Offline seç, sayfayı yenile, kayıt ekle, Offline'ı kapat, kaydın senkronize olduğunu gör.
+
 ---
 
 ## 🎬 3. Adım Adım Demo Senaryosu (Sunumda Nasıl Gösterilir?)

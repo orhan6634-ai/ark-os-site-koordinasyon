@@ -211,7 +211,7 @@ export function IncidentSection({
 
   const openCount = incidents.filter((i) => i.status !== 'Çözüldü').length;
   const pendingSyncCount = incidents.filter(
-    (i) => i.syncStatus === 'pending'
+    (i) => i.syncStatus === 'pending' || i.syncStatus === 'failed'
   ).length;
 
   return (
@@ -291,8 +291,9 @@ export function IncidentSection({
         >
           <AlertCircle className="h-4 w-4 shrink-0 text-amber-600" />
           <span>
-            Yerel kayıtlar güvende (IndexedDB), ancak sunucu senkronizasyonu şu an
-            yapılamadı: {syncError}
+            <strong>Gönderilemedi, tekrar denenecek:</strong> Yerel kayıtlar
+            IndexedDB kuyruğunda güvende; bağlantı sağlandığında otomatik olarak
+            tekrar gönderilecek ({syncError}).
           </span>
         </div>
       )}
@@ -540,12 +541,26 @@ export function IncidentSection({
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     {item.syncStatus === 'synced' ? (
-                      <span className="inline-flex items-center gap-1 rounded bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-800">
+                      <span
+                        data-testid={`sync-badge-${item.id}`}
+                        className="inline-flex items-center gap-1 rounded bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-800"
+                      >
                         <CheckCircle2 className="h-3 w-3" />
                         Senkronize edildi
                       </span>
+                    ) : item.syncStatus === 'failed' ? (
+                      <span
+                        data-testid={`sync-badge-${item.id}`}
+                        className="inline-flex items-center gap-1 rounded bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-800"
+                      >
+                        <AlertCircle className="h-3 w-3" />
+                        Gönderilemedi, tekrar denenecek
+                      </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 rounded bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800">
+                      <span
+                        data-testid={`sync-badge-${item.id}`}
+                        className="inline-flex items-center gap-1 rounded bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800"
+                      >
                         <RefreshCw className="h-3 w-3" />
                         Senkronizasyon bekliyor
                       </span>

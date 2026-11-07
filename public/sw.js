@@ -1,8 +1,10 @@
-const CACHE_NAME = 'ark-os-offline-v2';
+const CACHE_NAME = 'ark-os-shell-v3';
 const CORE_ASSETS = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
+  '/icon-192.svg',
+  '/icon-512.svg',
 ];
 
 self.addEventListener('install', (event) => {
@@ -13,14 +15,14 @@ self.addEventListener('install', (event) => {
       try {
         const res = await fetch('/index.html', { cache: 'no-store' });
         const html = await res.text();
-        const assetUrls = [];
+        const assetUrls = new Set();
         const regex = /(?:src|href)="(\/[^"]+)"/g;
         let match;
         while ((match = regex.exec(html)) !== null) {
-          assetUrls.push(match[1]);
+          assetUrls.add(match[1]);
         }
-        if (assetUrls.length > 0) {
-          await cache.addAll(assetUrls);
+        if (assetUrls.size > 0) {
+          await cache.addAll([...assetUrls]);
         }
       } catch (e) {
         // Ignore dynamic parse error during install
@@ -32,15 +34,16 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
+    (async () => {
+      const keys = await caches.keys();
+      await Promise.all(
         keys
           .filter((key) => key !== CACHE_NAME)
           .map((key) => caches.delete(key))
-      )
-    )
+      );
+      await self.clients.claim();
+    })()
   );
-  self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {
@@ -51,23 +54,29 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== self.location.origin) return;
   if (url.pathname.startsWith('/api/')) return;
 
+  // Sayfa yenileme / gezinme (navigate) isteklerinde:
+  // Önce ağı dene, ağ kapalıysa ("Network > Offline") önbellekteki uygulama kabuğunu döndür
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put('/', clone));
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put('/index.html', clone));
+          }
           return response;
         })
         .catch(async () => {
+          const cachedIndex = await caches.match('/index.html');
+          if (cachedIndex) return cachedIndex;
           const cachedRoot = await caches.match('/');
-          if (cachedRoot) return cachedRoot;
-          return caches.match('/index.html');
+          return cachedRoot;
         })
     );
     return;
   }
 
+  // JS, CSS, SVG ve manifest dosyaları için Cache-First + arka plan güncelleme
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
       const fetchPromise = fetch(request)
