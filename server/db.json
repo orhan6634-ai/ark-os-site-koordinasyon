@@ -1,6 +1,19 @@
 {
   "incidents": [
     {
+      "id": "OLAY-1794064958201-BQBEN",
+      "type": "Arıza / Hasar Bildirimi",
+      "priority": "Orta",
+      "location": "A Blok",
+      "description": "Faz 6 Canlı HTTPS Offline & Hata Kalkanı Koruma Testi",
+      "createdAt": "2026-11-07T15:22:38.201Z",
+      "updatedAt": "2026-11-07T15:22:38.201Z",
+      "status": "Açık",
+      "createdOffline": true,
+      "syncStatus": "synced",
+      "serverSyncedAt": "2026-11-07T15:22:40.263Z"
+    },
+    {
       "id": "OLAY-1794064396518-KNBPH",
       "type": "Bilgi / Koordinasyon Notu",
       "priority": "Yüksek",
@@ -19,12 +32,12 @@
       "priority": "Yüksek",
       "location": "B Blok - Bodrum Hidrofor Odası",
       "description": "Örnek kayıt: Yedek hidrofor pompasında titreşim ve basınç dalgalanması gözlemlendi, teknik ekip bilgilendirildi.",
-      "createdAt": "2026-11-07T14:48:13.162Z",
-      "updatedAt": "2026-11-07T14:48:13.168Z",
+      "createdAt": "2026-11-07T14:57:29.860Z",
+      "updatedAt": "2026-11-07T14:57:29.863Z",
       "status": "İnceleniyor",
       "createdOffline": false,
       "syncStatus": "synced",
-      "serverSyncedAt": "2026-11-07T15:13:13.599Z"
+      "serverSyncedAt": "2026-11-07T15:22:30.439Z"
     },
     {
       "id": "OLAY-PB-DROUGHT",
@@ -45,12 +58,12 @@
       "priority": "Orta",
       "location": "A Blok - Daire 4 (Yaşlı Sakin)",
       "description": "Örnek kayıt: Asansör bakımı süresince içme suyu damacanasının kata çıkarılması için site görevlisi desteği talep edildi.",
-      "createdAt": "2026-11-07T14:23:13.168Z",
-      "updatedAt": "2026-11-07T14:23:13.168Z",
+      "createdAt": "2026-11-07T14:32:29.863Z",
+      "updatedAt": "2026-11-07T14:32:29.863Z",
       "status": "Açık",
       "createdOffline": false,
       "syncStatus": "synced",
-      "serverSyncedAt": "2026-11-07T15:13:13.600Z"
+      "serverSyncedAt": "2026-11-07T15:22:30.439Z"
     },
     {
       "id": "OLAY-1794058274407-CAQGU",
@@ -365,5 +378,5 @@
       "serverSyncedAt": "2026-11-07T07:56:36.605Z"
     }
   ],
-  "lastSyncAt": "2026-11-07T15:13:16.564Z"
+  "lastSyncAt": "2026-11-07T15:22:40.263Z"
 }

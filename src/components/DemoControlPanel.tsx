@@ -25,6 +25,7 @@ export function DemoControlPanel({
   waterAnomalyDemo,
   onToggleWaterAnomaly,
   onStartScenario,
+  onTriggerSimulatedCrash,
 }: {
   isOpen: boolean;
   onToggleOpen: () => void;
@@ -38,6 +39,7 @@ export function DemoControlPanel({
   waterAnomalyDemo: boolean;
   onToggleWaterAnomaly: () => void;
   onStartScenario: (playbookId: PlaybookId) => void;
+  onTriggerSimulatedCrash?: () => void;
 }) {
   const activeSimCount = [
     simulatedOffline,
@@ -264,6 +266,24 @@ export function DemoControlPanel({
                   Playbook Aç
                 </span>
               </button>
+
+              {/* 6. Hata Kalkanı (Error Boundary) Testi */}
+              {onTriggerSimulatedCrash && (
+                <button
+                  type="button"
+                  data-testid="demo-btn-throw-error"
+                  onClick={onTriggerSimulatedCrash}
+                  className="flex w-full items-center justify-between rounded-xl border border-red-300 bg-red-50 p-3.5 text-left text-sm font-bold text-red-950 transition hover:bg-red-100"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <AlertTriangle className="h-4 w-4 shrink-0 text-red-700" />
+                    <span>6. Hata Kalkanı Testi (Render Hatası Fırlat)</span>
+                  </span>
+                  <span className="rounded bg-red-200 px-2 py-0.5 text-xs text-red-950">
+                    Test Et
+                  </span>
+                </button>
+              )}
             </div>
           </aside>
         </div>

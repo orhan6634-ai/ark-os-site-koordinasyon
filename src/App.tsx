@@ -10,6 +10,7 @@ import {
   Database,
   Droplets,
   HelpCircle,
+  Info,
   LayoutDashboard,
   RefreshCw,
   ShieldAlert,
@@ -27,6 +28,8 @@ import { DemoControlPanel } from './components/DemoControlPanel';
 import { AfterActionReportSection } from './components/AfterActionReportSection';
 import { BackupPowerCard } from './components/BackupPowerCard';
 import { LoadSheddingCard } from './components/LoadSheddingCard';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { AboutModal, ARK_OS_VERSION_NOTICE } from './components/AboutModal';
 import { ensureInitialIncidents, getAllIncidents } from './db/localDb';
 import {
   syncLocalIncidentsToServer,
@@ -159,8 +162,17 @@ function MetricCard({
   );
 }
 
+function CrashTrigger({ shouldCrash }: { shouldCrash: boolean }) {
+  if (shouldCrash) {
+    throw new Error('Simüle edilmiş beklenmedik render hatası (ErrorBoundary testi)');
+  }
+  return null;
+}
+
 export function App() {
   const [activeTab, setActiveTab] = useState<AppTab>(() => getInitialTab());
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState<boolean>(false);
+  const [simulatedCrash, setSimulatedCrash] = useState<boolean>(false);
   const [mode, setMode] = useState<SystemMode>('normal');
   const [browserOnline, setBrowserOnline] = useState<boolean>(
     typeof navigator !== 'undefined' ? navigator.onLine : true
@@ -543,7 +555,9 @@ export function App() {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-slate-100 text-slate-950">
+    <ErrorBoundary onResetSimulatedCrash={() => setSimulatedCrash(false)}>
+      <CrashTrigger shouldCrash={simulatedCrash} />
+      <div className="min-h-screen overflow-x-hidden bg-slate-100 text-slate-950">
       {/* ÜST ÇUBUK */}
       <header className="sticky top-0 z-20 border-b border-slate-300 bg-white shadow-sm print:hidden">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-3 py-3 sm:px-4">
@@ -1296,19 +1310,34 @@ export function App() {
         waterAnomalyDemo={waterAnomalyDemo}
         onToggleWaterAnomaly={toggleWaterAnomalySimulation}
         onStartScenario={handleStartDemoScenario}
+        onTriggerSimulatedCrash={() => setSimulatedCrash(true)}
       />
 
-      {/* ALT BİLGİ ÇUBUĞU */}
-      <footer className="mt-8 border-t border-slate-300 bg-white py-4 text-xs font-medium text-slate-700 print:hidden">
+      {/* HAKKINDA PENCERESİ (FAZ 6.2) */}
+      <AboutModal
+        isOpen={isAboutModalOpen}
+        onClose={() => setIsAboutModalOpen(false)}
+      />
+
+      {/* ALT BİLGİ ÇUBUĞU (FAZ 6.2 SÜRÜM BİLGİSİ) */}
+      <footer className="mt-8 border-t border-slate-300 bg-white py-4 text-xs font-medium text-slate-800 print:hidden">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4">
-          <div>
-            <strong>ARK-OS MVP</strong> • Site İçi Karar Destek ve Kesinti
-            Koordinasyon Prototipi (Gerçek sensör bağlı değildir; örnek veriyle
-            çalışır)
+          <div data-testid="footer-version-notice" className="font-semibold">
+            {ARK_OS_VERSION_NOTICE}
           </div>
+          <button
+            type="button"
+            data-testid="open-about-modal-btn"
+            onClick={() => setIsAboutModalOpen(true)}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-slate-100 px-3 py-1.5 text-xs font-extrabold text-slate-900 hover:bg-slate-200"
+          >
+            <Info className="h-3.5 w-3.5 text-indigo-700" />
+            Hakkında (v0.9)
+          </button>
         </div>
       </footer>
-    </div>
+      </div>
+    </ErrorBoundary>
   );
 }
 export default App;

@@ -441,6 +441,15 @@ export function IncidentSection({
           )}
         </div>
 
+        {/* FAZ 6.4: FORMA GÖRÜNÜR KİŞİSEL VERİ UYARISI */}
+        <div
+          data-testid="personal-data-warning"
+          className="mb-3 flex items-center gap-2 rounded-lg border border-amber-400 bg-amber-50 px-3 py-2 text-xs font-extrabold text-amber-950"
+        >
+          <AlertCircle className="h-4 w-4 shrink-0 text-amber-700" />
+          <span>Bu prototipte gerçek kişisel veri girmeyin.</span>
+        </div>
+
         {/* FAZ 3.1: HAZIR HIZLI ETİKET BUTONLARI */}
         <div className="mb-4 rounded-lg border border-slate-200 bg-white p-3">
           <div className="mb-2 flex items-center gap-1.5 text-xs font-bold text-slate-800">
