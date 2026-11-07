@@ -125,6 +125,8 @@ app.post('/api/sync', (req, res) => {
       status: record.status,
       createdOffline: Boolean(record.createdOffline),
       syncStatus: 'synced',
+      playbookId: typeof record.playbookId === 'string' ? record.playbookId : undefined,
+      subSteps: Array.isArray(record.subSteps) ? record.subSteps : undefined,
       serverSyncedAt: new Date().toISOString(),
     };
 

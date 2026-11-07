@@ -4,6 +4,7 @@ import {
   IncidentStatus,
   PlaybookId,
   PlaybookStepState,
+  PlaybookSubStepLog,
 } from '../types';
 
 export class ArkOsLocalDatabase extends Dexie {
@@ -57,6 +58,20 @@ export async function ensureInitialIncidents(): Promise<IncidentRecord[]> {
   const count = await db.incidents.count();
   if (count === 0) {
     await db.incidents.bulkPut(INITIAL_SAMPLE_INCIDENTS);
+  } else {
+    // Eski sürümde ayrı ayrı oluşmuş "[Oyun Planı: ...]" satırları varsa gürültüyü önlemek için temizle
+    const all = await db.incidents.toArray();
+    const legacyNoiseIds = all
+      .filter(
+        (item) =>
+          !item.playbookId &&
+          !item.id.startsWith('OLAY-PB-') &&
+          item.description.startsWith('[Oyun Planı:')
+      )
+      .map((item) => item.id);
+    if (legacyNoiseIds.length > 0) {
+      await db.incidents.bulkDelete(legacyNoiseIds);
+    }
   }
   return getAllIncidents();
 }
@@ -97,7 +112,9 @@ export async function updateIncidentStatus(
 
 export async function getPendingIncidents(): Promise<IncidentRecord[]> {
   return db.incidents
-    .filter((item) => item.syncStatus === 'pending' || item.syncStatus === 'failed')
+    .filter(
+      (item) => item.syncStatus === 'pending' || item.syncStatus === 'failed'
+    )
     .toArray();
 }
 
@@ -132,6 +149,7 @@ export async function getPlaybookStepStates(
   return map;
 }
 
+// FAZ 3.3: Bir playbook çalıştırması = tek olay kaydı; adımlar o kaydın içinde zaman damgalı alt satırlar
 export async function togglePlaybookStepWithIncident(params: {
   playbookId: PlaybookId;
   playbookTitle: string;
@@ -144,16 +162,40 @@ export async function togglePlaybookStepWithIncident(params: {
 }): Promise<{ stepState: PlaybookStepState; createdIncident?: IncidentRecord }> {
   const key = `${params.playbookId}:${params.stepId}`;
   const nowIso = new Date().toISOString();
+  const playbookIncidentId = `OLAY-PB-${params.playbookId.toUpperCase()}`;
+
+  const existingIncident = await db.incidents.get(playbookIncidentId);
+  const currentSubSteps: PlaybookSubStepLog[] = existingIncident?.subSteps
+    ? [...existingIncident.subSteps]
+    : [];
 
   if (params.completed) {
-    const incident = await addIncidentRecord({
+    const filtered = currentSubSteps.filter((s) => s.stepId !== params.stepId);
+    filtered.push({
+      stepId: params.stepId,
+      order: params.stepOrder,
+      title: params.stepTitle,
+      location: params.defaultLocation,
+      completedAt: nowIso,
+    });
+    filtered.sort((a, b) => a.order - b.order);
+
+    const updatedIncident: IncidentRecord = {
+      id: playbookIncidentId,
       type: 'Bilgi / Koordinasyon Notu',
       priority: 'Yüksek',
-      location: params.defaultLocation,
-      description: `[Oyun Planı: ${params.playbookTitle}] Adım #${params.stepOrder} uygulandı: ${params.stepTitle}`,
-      status: 'Çözüldü',
-      createdOffline: params.isOffline,
-    });
+      location: existingIncident?.location || params.defaultLocation,
+      description: `Oyun Planı Çalıştırması: ${params.playbookTitle} (${filtered.length} adım tamamlandı)`,
+      createdAt: existingIncident?.createdAt || nowIso,
+      updatedAt: nowIso,
+      status: filtered.length >= 4 ? 'Çözüldü' : 'İnceleniyor',
+      createdOffline: existingIncident?.createdOffline || params.isOffline,
+      syncStatus: 'pending',
+      playbookId: params.playbookId,
+      subSteps: filtered,
+    };
+
+    await db.incidents.put(updatedIncident);
 
     const state: PlaybookStepState = {
       key,
@@ -161,11 +203,29 @@ export async function togglePlaybookStepWithIncident(params: {
       stepId: params.stepId,
       completed: true,
       completedAt: nowIso,
-      incidentId: incident.id,
+      incidentId: playbookIncidentId,
     };
     await db.playbookSteps.put(state);
-    return { stepState: state, createdIncident: incident };
+    return { stepState: state, createdIncident: updatedIncident };
   } else {
+    const remaining = currentSubSteps.filter((s) => s.stepId !== params.stepId);
+
+    if (remaining.length === 0) {
+      if (existingIncident) {
+        await db.incidents.delete(playbookIncidentId);
+      }
+    } else if (existingIncident) {
+      const updatedIncident: IncidentRecord = {
+        ...existingIncident,
+        description: `Oyun Planı Çalıştırması: ${params.playbookTitle} (${remaining.length} adım tamamlandı)`,
+        updatedAt: nowIso,
+        status: remaining.length >= 4 ? 'Çözüldü' : 'İnceleniyor',
+        syncStatus: 'pending',
+        subSteps: remaining,
+      };
+      await db.incidents.put(updatedIncident);
+    }
+
     const state: PlaybookStepState = {
       key,
       playbookId: params.playbookId,

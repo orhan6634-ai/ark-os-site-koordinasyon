@@ -1,6 +1,71 @@
 {
   "incidents": [
     {
+      "id": "OLAY-1794058274407-CAQGU",
+      "type": "Arıza / Hasar Bildirimi",
+      "priority": "Kritik",
+      "location": "Ortak Bahçe / Otopark",
+      "description": "Su baskını bildirimi: Bodrum / otopark giderlerinde su birikmesi var, tahliye pompası kontrolü gerekiyor.",
+      "createdAt": "2026-11-07T13:31:14.407Z",
+      "updatedAt": "2026-11-07T13:31:14.407Z",
+      "status": "Açık",
+      "createdOffline": false,
+      "syncStatus": "synced",
+      "serverSyncedAt": "2026-11-07T13:31:14.442Z"
+    },
+    {
+      "id": "OLAY-1794058273889-0IJNB",
+      "type": "Su / Enerji Kesintisi",
+      "priority": "Kritik",
+      "location": "Jeneratör / Trafo Alanı",
+      "description": "Elektrik kesintisi: Blok genelinde şebeke elektriği kesildi, yedek güç durumu kontrol ediliyor.",
+      "createdAt": "2026-11-07T13:31:13.889Z",
+      "updatedAt": "2026-11-07T13:31:13.889Z",
+      "status": "Açık",
+      "createdOffline": false,
+      "syncStatus": "synced",
+      "serverSyncedAt": "2026-11-07T13:31:13.925Z"
+    },
+    {
+      "id": "OLAY-1794058273347-CSDCO",
+      "type": "Arıza / Hasar Bildirimi",
+      "priority": "Yüksek",
+      "location": "Merkez Su Deposu / Hidrofor",
+      "description": "Pompa arızası bildirimi: Hidrofor pompasında basınç düşüklüğü ve olağandışı ses tespit edildi.",
+      "createdAt": "2026-11-07T13:31:13.347Z",
+      "updatedAt": "2026-11-07T13:31:13.347Z",
+      "status": "Açık",
+      "createdOffline": false,
+      "syncStatus": "synced",
+      "serverSyncedAt": "2026-11-07T13:31:13.409Z"
+    },
+    {
+      "id": "OLAY-1794058272799-5UYXC",
+      "type": "Arıza / Hasar Bildirimi",
+      "priority": "Yüksek",
+      "location": "Merkez Su Deposu / Hidrofor",
+      "description": "Boru patlağı bildirimi: Ana su hattında sızıntı gözlemlendi, vana kontrolü gerekiyor.",
+      "createdAt": "2026-11-07T13:31:12.799Z",
+      "updatedAt": "2026-11-07T13:31:12.799Z",
+      "status": "Açık",
+      "createdOffline": false,
+      "syncStatus": "synced",
+      "serverSyncedAt": "2026-11-07T13:31:12.836Z"
+    },
+    {
+      "id": "OLAY-PB-HEATWAVE",
+      "type": "Bilgi / Koordinasyon Notu",
+      "priority": "Yüksek",
+      "location": "Ortak Bahçe / Otopark",
+      "description": "Oyun Planı Çalıştırması: Aşırı Sıcak Dalgası (3 adım tamamlandı)",
+      "createdAt": "2026-11-07T13:31:09.243Z",
+      "updatedAt": "2026-11-07T13:31:09.893Z",
+      "status": "İnceleniyor",
+      "createdOffline": false,
+      "syncStatus": "synced",
+      "serverSyncedAt": "2026-11-07T13:31:09.947Z"
+    },
+    {
       "id": "OLAY-1794056820929-FCQ32",
       "type": "Su / Enerji Kesintisi",
       "priority": "Yüksek",
@@ -19,12 +84,12 @@
       "priority": "Yüksek",
       "location": "B Blok - Bodrum Hidrofor Odası",
       "description": "Örnek kayıt: Yedek hidrofor pompasında titreşim ve basınç dalgalanması gözlemlendi, teknik ekip bilgilendirildi.",
-      "createdAt": "2026-11-07T12:48:40.170Z",
-      "updatedAt": "2026-11-07T12:48:40.175Z",
+      "createdAt": "2026-11-07T13:06:08.556Z",
+      "updatedAt": "2026-11-07T13:06:08.556Z",
       "status": "İnceleniyor",
       "createdOffline": false,
       "syncStatus": "synced",
-      "serverSyncedAt": "2026-11-07T13:13:40.541Z"
+      "serverSyncedAt": "2026-11-07T13:31:08.947Z"
     },
     {
       "id": "OLAY-ORNEK-02",
@@ -32,12 +97,12 @@
       "priority": "Orta",
       "location": "A Blok - Daire 4 (Yaşlı Sakin)",
       "description": "Örnek kayıt: Asansör bakımı süresince içme suyu damacanasının kata çıkarılması için site görevlisi desteği talep edildi.",
-      "createdAt": "2026-11-07T12:23:40.175Z",
-      "updatedAt": "2026-11-07T12:23:40.175Z",
+      "createdAt": "2026-11-07T12:41:08.556Z",
+      "updatedAt": "2026-11-07T12:41:08.556Z",
       "status": "Açık",
       "createdOffline": false,
       "syncStatus": "synced",
-      "serverSyncedAt": "2026-11-07T13:13:40.541Z"
+      "serverSyncedAt": "2026-11-07T13:31:08.947Z"
     },
     {
       "id": "OLAY-1794046601882-0O67W",
@@ -274,5 +339,5 @@
       "serverSyncedAt": "2026-11-07T07:56:36.605Z"
     }
   ],
-  "lastSyncAt": "2026-11-07T13:13:40.541Z"
+  "lastSyncAt": "2026-11-07T13:31:14.442Z"
 }

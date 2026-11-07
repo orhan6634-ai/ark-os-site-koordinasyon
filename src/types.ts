@@ -51,6 +51,14 @@ export type IncidentPriority = 'Düşük' | 'Orta' | 'Yüksek' | 'Kritik';
 
 export type IncidentStatus = 'Açık' | 'İnceleniyor' | 'Çözüldü';
 
+export interface PlaybookSubStepLog {
+  stepId: string;
+  order: number;
+  title: string;
+  location: string;
+  completedAt: string;
+}
+
 export interface IncidentRecord {
   id: string;
   type: IncidentRecordType;
@@ -62,6 +70,8 @@ export interface IncidentRecord {
   status: IncidentStatus;
   createdOffline: boolean;
   syncStatus: 'pending' | 'synced' | 'failed';
+  playbookId?: PlaybookId;
+  subSteps?: PlaybookSubStepLog[];
 }
 
 export type PlaybookId =

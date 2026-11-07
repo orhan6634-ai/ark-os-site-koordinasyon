@@ -104,7 +104,7 @@ export function PlaybookSection({
 
     if (nextCompleted && result.createdIncident) {
       setFeedbackMsg(
-        `"${step.title}" adımı işaretlendi ve Olay/İhtiyaç Kaydı listesine (${result.createdIncident.id}) otomatik olarak kaydedildi.`
+        `"${step.title}" adımı işaretlendi ve tekil oyun planı kaydı (${result.createdIncident.id}) altına zaman damgalı alt satır olarak eklendi.`
       );
     } else {
       setFeedbackMsg(`"${step.title}" adımının işareti kaldırıldı.`);
@@ -130,8 +130,9 @@ export function PlaybookSection({
             Kriz Oyun Planları (Playbook Kontrol Listeleri)
           </h2>
           <p className="text-xs text-slate-600">
-            Senaryo seçip adımları işaretlediğinizde her adım zaman damgasıyla{' '}
-            <strong>Olay ve İhtiyaç Kaydı</strong> tablosuna otomatik olarak düşer.
+            Bir oyun planı çalıştırıldığında <strong>tek bir olay kaydı</strong>{' '}
+            oluşur; işaretlediğiniz adımlar o kaydın içinde zaman damgalı alt
+            satırlar (açılır/kapanır) olarak tutulur.
           </p>
         </div>
 
