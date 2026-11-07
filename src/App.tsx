@@ -25,6 +25,8 @@ import { WaterAnomalyBanner, WATER_DIFF_THRESHOLD_M3, WATER_DIFF_THRESHOLD_PCT }
 import { PlaybookSection } from './components/PlaybookSection';
 import { DemoControlPanel } from './components/DemoControlPanel';
 import { AfterActionReportSection } from './components/AfterActionReportSection';
+import { BackupPowerCard } from './components/BackupPowerCard';
+import { LoadSheddingCard } from './components/LoadSheddingCard';
 import { ensureInitialIncidents, getAllIncidents } from './db/localDb';
 import {
   syncLocalIncidentsToServer,
@@ -189,9 +191,15 @@ export function App() {
   const [syncError, setSyncError] = useState<string | null>(null);
   const [syncRefreshToken, setSyncRefreshToken] = useState<number>(0);
 
-  // Genel Durum özeti için yerel kayıt sayaçları
+  // Genel Durum özeti için yerel kayıt sayaçları ve ayarlanabilir su eşikleri
   const [pendingSyncCount, setPendingSyncCount] = useState<number>(0);
   const [openIncidentCount, setOpenIncidentCount] = useState<number>(0);
+  const [waterThresholdM3, setWaterThresholdM3] = useState<number>(
+    WATER_DIFF_THRESHOLD_M3
+  );
+  const [waterThresholdPct, setWaterThresholdPct] = useState<number>(
+    WATER_DIFF_THRESHOLD_PCT
+  );
 
   const selectTab = (tab: AppTab) => {
     setActiveTab(tab);
@@ -467,8 +475,7 @@ export function App() {
       ? Number(((waterDiffM3 / mainWater) * 100).toFixed(1))
       : 0;
   const hasWaterAnomaly =
-    waterDiffM3 >= WATER_DIFF_THRESHOLD_M3 ||
-    waterDiffPct >= WATER_DIFF_THRESHOLD_PCT;
+    waterDiffM3 >= waterThresholdM3 || waterDiffPct >= waterThresholdPct;
 
   const missingReadingsCount = [
     snapshot.water.mainMeterM3,
@@ -960,40 +967,46 @@ export function App() {
                 </div>
               </section>
 
-              {/* KRİZ MODUNDA KRİTİK REZERV ÖZETİ */}
+              {/* KRİZ MODUNDA KRİTİK REZERV ÖZETİ VE YÜK AZALTMA ÖNERİSİ */}
               {mode === 'crisis' && (
-                <section className="rounded-xl border-2 border-red-400 bg-red-50/80 p-4">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <h2 className="flex items-center gap-2 text-base font-extrabold text-red-950">
-                      <AlertTriangle className="h-5 w-5 text-red-700" />
-                      Kriz / Kesinti Modu — Kritik Rezerv ve Yedek Güç Durumu
-                    </h2>
-                    <button
-                      type="button"
-                      onClick={() => selectTab('crisis_playbook')}
-                      className="rounded-lg bg-red-700 px-3 py-1.5 text-xs font-bold text-white hover:bg-red-800"
-                    >
-                      Playbook Kontrol Listesini Aç →
-                    </button>
-                  </div>
-                  <div className="mt-3 grid grid-cols-1 gap-4 md:grid-cols-3">
-                    <MetricCard
-                      reading={snapshot.water.tankLevelPct}
-                      icon={<Droplets className="h-5 w-5 text-blue-600" />}
-                      highlight
-                    />
-                    <MetricCard
-                      reading={snapshot.electricity.batterySocPct}
-                      icon={<BatteryCharging className="h-5 w-5 text-emerald-600" />}
-                      highlight
-                    />
-                    <MetricCard
-                      reading={snapshot.electricity.generatorStatus}
-                      icon={<Zap className="h-5 w-5 text-amber-600" />}
-                      highlight
-                    />
-                  </div>
-                </section>
+                <div className="space-y-4">
+                  <section className="rounded-xl border-2 border-red-400 bg-red-50/80 p-4">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <h2 className="flex items-center gap-2 text-base font-extrabold text-red-950">
+                        <AlertTriangle className="h-5 w-5 text-red-700" />
+                        Kriz / Kesinti Modu — Kritik Rezerv ve Yedek Güç Durumu
+                      </h2>
+                      <button
+                        type="button"
+                        onClick={() => selectTab('crisis_playbook')}
+                        className="rounded-lg bg-red-700 px-3 py-1.5 text-xs font-bold text-white hover:bg-red-800"
+                      >
+                        Playbook Kontrol Listesini Aç →
+                      </button>
+                    </div>
+                    <div className="mt-3 grid grid-cols-1 gap-4 md:grid-cols-3">
+                      <MetricCard
+                        reading={snapshot.water.tankLevelPct}
+                        icon={<Droplets className="h-5 w-5 text-blue-600" />}
+                        highlight
+                      />
+                      <MetricCard
+                        reading={snapshot.electricity.batterySocPct}
+                        icon={<BatteryCharging className="h-5 w-5 text-emerald-600" />}
+                        highlight
+                      />
+                      <BackupPowerCard
+                        reading={snapshot.electricity.generatorStatus}
+                        highlight
+                      />
+                    </div>
+                  </section>
+
+                  <LoadSheddingCard
+                    isOffline={connection === 'offline'}
+                    onDecisionRecorded={handlePlaybookStepRecorded}
+                  />
+                </div>
               )}
 
               {/* 1. SU GÖSTERGELERİ PANELİ */}
@@ -1013,6 +1026,12 @@ export function App() {
                   apartmentsTotalM3={snapshot.water.apartmentsTotalM3.value}
                   isSimulatedAnomaly={waterAnomalyDemo}
                   onToggleSimulateAnomaly={toggleWaterAnomalySimulation}
+                  thresholdM3={waterThresholdM3}
+                  thresholdPct={waterThresholdPct}
+                  onChangeThresholds={(nextM3, nextPct) => {
+                    setWaterThresholdM3(nextM3);
+                    setWaterThresholdPct(nextPct);
+                  }}
                 />
 
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -1057,9 +1076,8 @@ export function App() {
                     icon={<BatteryCharging className="h-5 w-5 text-emerald-600" />}
                     highlight={mode === 'crisis'}
                   />
-                  <MetricCard
+                  <BackupPowerCard
                     reading={snapshot.electricity.generatorStatus}
-                    icon={<Zap className="h-5 w-5 text-slate-800" />}
                     highlight={mode === 'crisis' || mode === 'recovery'}
                   />
                 </div>
@@ -1110,13 +1128,19 @@ export function App() {
                     icon={<BatteryCharging className="h-5 w-5 text-emerald-600" />}
                     highlight={mode === 'crisis'}
                   />
-                  <MetricCard
+                  <BackupPowerCard
                     reading={snapshot.electricity.generatorStatus}
-                    icon={<Zap className="h-5 w-5 text-amber-600" />}
                     highlight={mode === 'crisis'}
                   />
                 </div>
               </section>
+
+              {mode === 'crisis' && (
+                <LoadSheddingCard
+                  isOffline={connection === 'offline'}
+                  onDecisionRecorded={handlePlaybookStepRecorded}
+                />
+              )}
 
               <PlaybookSection
                 isOffline={connection === 'offline'}
