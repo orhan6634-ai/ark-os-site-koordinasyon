@@ -1,0 +1,10 @@
+{
+  "name": "ARK-OS Site Dayanıklılık ve Koordinasyon Platformu",
+  "short_name": "ARK-OS",
+  "description": "Konut siteleri için çevrimdışı çalışabilen yerel karar destek ve koordinasyon paneli",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0f172a",
+  "lang": "tr"
+}
