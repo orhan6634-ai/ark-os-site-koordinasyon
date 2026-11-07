@@ -573,6 +573,15 @@ export function App() {
                 <span className="rounded-full border border-indigo-300 bg-indigo-50 px-2.5 py-0.5 text-xs font-bold text-indigo-950">
                   Örnek veri (Sensör simülasyonu)
                 </span>
+                <button
+                  type="button"
+                  data-testid="header-about-modal-btn"
+                  onClick={() => setIsAboutModalOpen(true)}
+                  className="inline-flex items-center gap-1 rounded-full border border-slate-300 bg-slate-100 px-2.5 py-0.5 text-xs font-extrabold text-slate-900 transition hover:bg-indigo-100 hover:border-indigo-300"
+                >
+                  <Info className="h-3.5 w-3.5 text-indigo-700" />
+                  Hakkında (v0.9)
+                </button>
               </div>
               <p className="text-xs font-medium text-slate-700 sm:text-sm">
                 {snapshot.siteName} • {snapshot.blockCount} Blok,{' '}

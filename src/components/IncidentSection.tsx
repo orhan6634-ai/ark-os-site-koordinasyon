@@ -584,10 +584,11 @@ export function IncidentSection({
                   : 'border-slate-300 focus:border-indigo-600'
               }`}
             />
-            {/* FAZ 3.2: Açıklama alanının sağ altında canlı karakter sayacı */}
-            <div className="mt-1 flex items-center justify-between text-xs">
-              <span className="text-slate-600">
-                En az 5, en fazla 500 karakter
+            {/* FAZ 3.2 & FAZ 6.4: Açıklama alanının hemen altında kişisel veri uyarısı ve canlı karakter sayacı */}
+            <div className="mt-1.5 flex flex-wrap items-center justify-between gap-2 text-xs">
+              <span className="inline-flex items-center gap-1 rounded border border-amber-300 bg-amber-50 px-2 py-0.5 font-extrabold text-amber-950">
+                <AlertCircle className="h-3.5 w-3.5 shrink-0 text-amber-700" />
+                Bu prototipte gerçek kişisel veri girmeyin. (En az 5, en fazla 500 karakter)
               </span>
               <span
                 data-testid="description-char-counter"

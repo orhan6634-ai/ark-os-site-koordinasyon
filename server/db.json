@@ -14,6 +14,19 @@
       "serverSyncedAt": "2026-11-07T15:22:40.263Z"
     },
     {
+      "id": "OLAY-ORNEK-01",
+      "type": "Arıza / Hasar Bildirimi",
+      "priority": "Yüksek",
+      "location": "B Blok - Bodrum Hidrofor Odası",
+      "description": "Örnek kayıt: Yedek hidrofor pompasında titreşim ve basınç dalgalanması gözlemlendi, teknik ekip bilgilendirildi.",
+      "createdAt": "2026-11-07T15:15:12.027Z",
+      "updatedAt": "2026-11-07T15:15:12.027Z",
+      "status": "İnceleniyor",
+      "createdOffline": false,
+      "syncStatus": "synced",
+      "serverSyncedAt": "2026-11-07T15:40:12.479Z"
+    },
+    {
       "id": "OLAY-1794064396518-KNBPH",
       "type": "Bilgi / Koordinasyon Notu",
       "priority": "Yüksek",
@@ -27,17 +40,17 @@
       "serverSyncedAt": "2026-11-07T15:13:16.564Z"
     },
     {
-      "id": "OLAY-ORNEK-01",
-      "type": "Arıza / Hasar Bildirimi",
-      "priority": "Yüksek",
-      "location": "B Blok - Bodrum Hidrofor Odası",
-      "description": "Örnek kayıt: Yedek hidrofor pompasında titreşim ve basınç dalgalanması gözlemlendi, teknik ekip bilgilendirildi.",
-      "createdAt": "2026-11-07T14:57:29.860Z",
-      "updatedAt": "2026-11-07T14:57:29.863Z",
-      "status": "İnceleniyor",
+      "id": "OLAY-ORNEK-02",
+      "type": "Temel İhtiyaç Talebi",
+      "priority": "Orta",
+      "location": "A Blok - Daire 4 (Yaşlı Sakin)",
+      "description": "Örnek kayıt: Asansör bakımı süresince içme suyu damacanasının kata çıkarılması için site görevlisi desteği talep edildi.",
+      "createdAt": "2026-11-07T14:50:12.027Z",
+      "updatedAt": "2026-11-07T14:50:12.027Z",
+      "status": "Açık",
       "createdOffline": false,
       "syncStatus": "synced",
-      "serverSyncedAt": "2026-11-07T15:22:30.439Z"
+      "serverSyncedAt": "2026-11-07T15:40:12.479Z"
     },
     {
       "id": "OLAY-PB-DROUGHT",
@@ -51,19 +64,6 @@
       "createdOffline": false,
       "syncStatus": "synced",
       "serverSyncedAt": "2026-11-07T14:33:25.139Z"
-    },
-    {
-      "id": "OLAY-ORNEK-02",
-      "type": "Temel İhtiyaç Talebi",
-      "priority": "Orta",
-      "location": "A Blok - Daire 4 (Yaşlı Sakin)",
-      "description": "Örnek kayıt: Asansör bakımı süresince içme suyu damacanasının kata çıkarılması için site görevlisi desteği talep edildi.",
-      "createdAt": "2026-11-07T14:32:29.863Z",
-      "updatedAt": "2026-11-07T14:32:29.863Z",
-      "status": "Açık",
-      "createdOffline": false,
-      "syncStatus": "synced",
-      "serverSyncedAt": "2026-11-07T15:22:30.439Z"
     },
     {
       "id": "OLAY-1794058274407-CAQGU",
@@ -378,5 +378,5 @@
       "serverSyncedAt": "2026-11-07T07:56:36.605Z"
     }
   ],
-  "lastSyncAt": "2026-11-07T15:22:40.263Z"
+  "lastSyncAt": "2026-11-07T15:40:12.479Z"
 }
