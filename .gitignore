@@ -4,3 +4,7 @@ dist/
 .netlify/
 *.log
 
+
+expo-ark-os/
+video/
+opencode.json

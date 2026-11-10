@@ -131,7 +131,7 @@ async function tryRemoteEndpointSync(
   const response = await fetch(`${baseUrl}/api/sync`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ records: recordsToSend }),
+    body: JSON.stringify({ records: recordsToSend, incidents: recordsToSend }),
   });
 
   const data = await response.json();

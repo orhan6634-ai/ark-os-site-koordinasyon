@@ -33,7 +33,11 @@ export async function onRequest(context) {
   if (request.method === 'POST') {
     try {
       const body = await request.json();
-      const incoming = Array.isArray(body?.incidents) ? body.incidents : [];
+      const incoming = Array.isArray(body?.incidents)
+        ? body.incidents
+        : Array.isArray(body?.records)
+        ? body.records
+        : [];
 
       const byId = new Map();
       for (const item of memoryStore.incidents) {

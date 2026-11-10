@@ -30,7 +30,11 @@ export default async (req) => {
   if (req.method === 'POST') {
     try {
       const body = await req.json();
-      const incoming = Array.isArray(body?.incidents) ? body.incidents : [];
+      const incoming = Array.isArray(body?.incidents)
+        ? body.incidents
+        : Array.isArray(body?.records)
+        ? body.records
+        : [];
 
       const byId = new Map();
       for (const item of memoryStore.incidents) {
